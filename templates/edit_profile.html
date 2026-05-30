@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1 class="auth-title">
+            Edit Profile
+        </h1>
+
+        <form method="POST"
+            enctype="multipart/form-data">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Bio
+                </label>
+
+                <textarea
+                    name="bio"
+                    rows="4"
+                    class="form-control">{{ user.bio }}</textarea>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    New Profile Picture
+                </label>
+
+                <input
+                    type="file"
+                    name="profile_picture"
+                    class="form-control"
+                    accept="image/*">
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-warning w-100">
+
+                Save Changes
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

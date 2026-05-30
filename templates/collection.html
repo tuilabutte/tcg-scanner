@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+
+{% block title %}Collection{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    {% if cards %}
+
+    <div class="row">
+
+        <!-- LEFT SIDE -->
+
+        <div class="col-lg-8">
+
+            <div
+                class="row g-4"
+                id="pokemon-grid">
+
+                {% for card in cards %}
+
+                <div
+                    class="col-md-6 col-xl-4 pokemon-entry"
+                    data-name="{{ card.name }}"
+                    data-type="{{ card.pokemon_type }}">
+
+                    <div class="pokemon-card">
+
+                        <img
+                            src="{{ url_for('static', filename='images/pokemon/' + card.name.lower() + '.png') }}"
+                            class="pokemon-image">
+
+                        <h3>{{ card.name }}</h3>
+
+                        <div class="pokemon-type">
+
+                            <img
+                                src="{{ url_for('static', filename='images/types/' + card.pokemon_type.lower() + '.png') }}"
+                                class="type-icon">
+
+                        </div>
+
+                        {% if card.rarity == "Common" %}
+
+                        <div class="rarity-common">
+                            Common
+                        </div>
+
+                        {% elif card.rarity == "Uncommon" %}
+
+                        <div class="rarity-uncommon">
+                            Uncommon
+                        </div>
+
+                        {% elif card.rarity == "Rare" %}
+
+                        <div class="rarity-rare">
+                            Rare
+                        </div>
+
+                        {% elif card.rarity == "Starter" %}
+
+                        <div class="rarity-starter">
+                            Starter
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-4">
+
+            <div class="stats-card mb-4">
+
+                <h2 class="collection-title">
+                    Collection
+                </h2>
+
+                <p class="collection-subtitle">
+                    National Pokédex Progress
+                </p>
+
+                <h4>
+                    {{ cards|length }} / 1025
+                </h4>
+
+                <div class="progress collection-progress">
+
+                    <div
+                        class="progress-bar bg-warning"
+                        role="progressbar"
+                        style="width: {{ progress_percentage }}%;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stats-card mb-4">
+
+                <h3>
+                    Statistics
+                </h3>
+
+                <hr>
+
+                <p>
+                    <strong>Collected:</strong>
+                    {{ cards|length }}
+                </p>
+
+                <p>
+                    <strong>Completion:</strong>
+                    {{ progress_percentage }}%
+                </p>
+
+                <p>
+                    <strong>National Pokédex:</strong>
+                    1025
+                </p>
+
+            </div>
+
+            <div class="stats-card">
+
+                <h3>
+                    Filters
+                </h3>
+
+                <hr>
+
+                <input
+                    type="text"
+                    id="pokemon-search"
+                    class="form-control mb-3"
+                    placeholder="Search Pokémon...">
+
+                <select
+                    id="type-filter"
+                    class="form-control mb-3">
+
+                    <option value="">
+                        All Types
+                    </option>
+
+                    <option>Bug</option>
+                    <option>Dragon</option>
+                    <option>Fairy</option>
+                    <option>Fire</option>
+                    <option>Ghost</option>
+                    <option>Grass</option>
+                    <option>Normal</option>
+                    <option>Rock</option>
+                    <option>Steel</option>
+                    <option>Water</option>
+
+                </select>
+
+                <select
+                    id="sort-filter"
+                    class="form-control">
+
+                    <option value="az">
+                        Sort A-Z
+                    </option>
+
+                    <option value="za">
+                        Sort Z-A
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-collection">
+
+        <h2>
+            No Pokémon collected yet.
+        </h2>
+
+        <p>
+            Start scanning cards to build
+            your collection.
+        </p>
+
+        <a
+            href="{{ url_for('scanner') }}"
+            class="btn btn-warning mt-3">
+
+            Open Scanner
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const searchBox =
+    document.getElementById("pokemon-search");
+
+const typeFilter =
+    document.getElementById("type-filter");
+
+const sortFilter =
+    document.getElementById("sort-filter");
+
+function filterPokemon() {
+
+    const search =
+        searchBox.value.toLowerCase();
+
+    const selectedType =
+        typeFilter.value;
+
+    document
+        .querySelectorAll(".pokemon-entry")
+        .forEach(card => {
+
+            const name =
+                card.dataset.name.toLowerCase();
+
+            const type =
+                card.dataset.type;
+
+            const matchesSearch =
+                name.includes(search);
+
+            const matchesType =
+                !selectedType ||
+                type === selectedType;
+
+            card.style.display =
+                matchesSearch &&
+                matchesType
+                ? ""
+                : "none";
+
+        });
+
+}
+
+function sortPokemon() {
+
+    const grid =
+        document.getElementById(
+            "pokemon-grid"
+        );
+
+    const cards =
+        Array.from(
+            grid.querySelectorAll(
+                ".pokemon-entry"
+            )
+        );
+
+    cards.sort((a, b) => {
+
+        const nameA =
+            a.dataset.name;
+
+        const nameB =
+            b.dataset.name;
+
+        if (
+            sortFilter.value === "az"
+        ) {
+
+            return nameA.localeCompare(
+                nameB
+            );
+
+        }
+
+        return nameB.localeCompare(
+            nameA
+        );
+
+    });
+
+    cards.forEach(card => {
+        grid.appendChild(card);
+    });
+
+}
+
+searchBox.addEventListener(
+    "input",
+    filterPokemon
+);
+
+typeFilter.addEventListener(
+    "change",
+    filterPokemon
+);
+
+sortFilter.addEventListener(
+    "change",
+    sortPokemon
+);
+
+</script>
+
+{% endblock %}

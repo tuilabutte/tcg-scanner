@@ -3,21 +3,160 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container pmx-auto">
-    <h1 class="mb-4" style="text-align: center;">Welcome to TCG SCANNER</h1>
-    <p class="mb-4" style="text-align: center;">Scan your trading cards with ease and keep track of your collection</p>
-    <button type="button" class="btn btn-outline-primary btn-lg d-block mx-auto mb-4"
-        style="border-color: #9344fc; color: #9344fc;" onclick="init()">
-        Start
-    </button>
-    <div style="text-align: center;" id="webcam-container"></div>
-    <div style="text-align: center;" id="class-container">
-	    <h2 id="class-name"></h2>
-    </div>
-    <div style="text-align: center;" id="label-container"></div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
-<script src="/static/js/scanner.js"></script>
+<div class="container">
+
+<section class="hero-section">
+
+    <h1 class="hero-title">
+        Pokémon TCG Scanner
+    </h1>
+
+    <p class="hero-subtitle">
+        Scan Pokémon trading cards, build your collection,
+        and track your discoveries.
+    </p>
+
+    <div class="mt-5">
+
+        <a href="{{ url_for('scanner') }}"
+            class="btn btn-warning btn-lg px-5 me-3">
+
+            Open Scanner
+
+        </a>
+
+        {% if not session.get("user_id") %}
+
+        <a href="{{ url_for('auth.register') }}"
+            class="btn btn-outline-light btn-lg px-5">
+
+            Get Started
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<section class="row mt-5 mb-5">
+
+    <div class="col-md-4">
+
+        <div class="stats-card">
+
+            <h2>1025</h2>
+
+            <p>National Pokédex Pokémon</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="stats-card">
+
+            <h2>14</h2>
+
+            <p>Cards Available To Scan</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="stats-card">
+
+            <h2>Profiles</h2>
+
+            <p>Compare Collections</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="row mt-5 g-4">
+
+    <div class="col-md-4">
+
+        <a href="{{ url_for('scanner') }}"
+            class="feature-link">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📷
+                </div>
+
+                <h3>Live Scanner</h3>
+
+                <p>
+                    Scan Pokémon cards using your camera
+                    and identify them instantly.
+                </p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <a href="{{ url_for('collection') }}"
+            class="feature-link">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📚
+                </div>
+
+                <h3>Collection Tracking</h3>
+
+                <p>
+                    Build your own Pokédex and
+                    track discovered Pokémon.
+                </p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <a href="{{ url_for('search') }}"
+            class="feature-link">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    👤
+                </div>
+
+                <h3>Trainer Profiles</h3>
+
+                <p>
+                    Search trainers and compare
+                    collection progress.
+                </p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+</div>
+
 {% endblock %}

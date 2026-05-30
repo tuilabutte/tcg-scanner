@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Scanner{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="scanner-wrapper">
+
+        <h1 class="scanner-title">
+            Card Scanner
+        </h1>
+
+        <p class="scanner-subtitle">
+            Point your camera at a Pokémon card to scan it.
+        </p>
+
+        <button id="start-button"
+            class="btn btn-warning btn-lg scanner-button">
+
+            Start Scanner
+
+        </button>
+
+        <div id="webcam-container" class="webcam-container mt-4"></div>
+
+        <div id="scan-result"
+            class="scan-result mt-4">
+
+            Waiting for scan...
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+
+{% endblock %}
+

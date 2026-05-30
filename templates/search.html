@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Trainer Search{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="collection-header">
+
+        <h1 class="collection-title">
+            Find Trainers
+        </h1>
+
+        <p class="collection-subtitle">
+            Search for other Pokémon collectors.
+        </p>
+
+    </div>
+
+    <div class="search-box">
+
+        <input type="text"
+            id="trainer-search"
+            class="form-control"
+            placeholder="Search trainers...">
+
+    </div>
+
+    <div id="search-results"
+        class="row g-4 mt-3">
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const searchInput =
+    document.getElementById("trainer-search");
+
+searchInput.addEventListener("input", async () => {
+
+    const query = searchInput.value;
+
+    const response = await fetch(
+        `/api/search-users?q=${query}`
+    );
+
+    const users = await response.json();
+
+    const results =
+        document.getElementById("search-results");
+
+    results.innerHTML = "";
+
+    users.forEach(user => {
+
+        results.innerHTML += `
+
+        <div class="col-md-4">
+
+            <div class="pokemon-card">
+
+                <img
+                    src="/static/images/profiles/${user.profile_picture}"
+                    class="profile-image">
+
+                <h3>${user.username}</h3>
+
+                <a href="/profile/${user.id}"
+                    class="btn btn-warning mt-3">
+
+                    View Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+
+});
+
+</script>
+
+{% endblock %}
+
