@@ -1,4 +1,4 @@
-/*GLOBAL*/
+/*BASE*/
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -42,9 +42,8 @@ body {
 /* MAIN CONTENT */
 
 .main-content {
-    padding: 40px 20px;
+    padding: 20px 20px;
 }
-
 
 /* AUTH */
 
@@ -96,13 +95,11 @@ body {
     border-radius: 12px;
 }
 
-
 /* FLASH MESSAGES */
 
 .alert {
     border-radius: 12px;
 }
-
 
 /* HOME PAGE */
 
@@ -123,7 +120,6 @@ body {
     margin-top: 20px;
 }
 
-
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
@@ -137,7 +133,6 @@ body {
     }
 
 }
-
 
 /* FEATURE CARDS */
 
@@ -165,7 +160,6 @@ body {
 .feature-card p {
     color: #d0d7e3;
 }
-
 
 /* SCANNER */
 
@@ -214,7 +208,6 @@ body {
     margin-top: 10px;
 }
 
-
 /* COLLECTION */
 
 .collection-header {
@@ -223,9 +216,10 @@ body {
 }
 
 .collection-title {
-    font-size: 3rem;
+    font-size: 2rem;
     color: #ffcb05;
     font-weight: 700;
+    margin-bottom: 5px;
 }
 
 .collection-subtitle {
@@ -269,14 +263,12 @@ body {
     margin-top: 100px;
 }
 
-
 /* SEARCH */
 
 .search-box {
     max-width: 600px;
     margin: auto;
 }
-
 
 /* PROFILE */
 
@@ -315,17 +307,19 @@ body {
     margin-bottom: 15px;
 }
 
-
 /* PROGRESS BAR */
 
 .collection-progress {
-    max-width: 500px;
-    margin: 20px auto;
-    height: 22px;
-    border-radius: 12px;
+    margin-top: 8px;
+    margin-bottom: 0;
+
+    height: 30px;
+
+    border-radius: 8px;
     overflow: hidden;
+
     background: #0f141d;
-    border: 2px solid #ffcb05;
+    border: 1px solid #ffcb05;
 }
 
 .progress-bar {
@@ -350,15 +344,15 @@ body {
 
 }
 
-
 /* COLLECTION STATS */
 
 .stats-card {
     background: rgba(30,35,48,0.95);
     border: 2px solid #2f3547;
     border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 20px;
+
+    padding: 16px;
+    margin-bottom: 16px;
 }
 
 .stats-card h2 {
@@ -369,6 +363,18 @@ body {
 .stats-card p {
     color: #d0d7e3;
     margin: 0;
+}
+.stats-card h3 {
+    margin-bottom: 8px;
+}
+
+.stats-card hr {
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.stats-card p {
+    margin-bottom: 4px;
 }
 
 /* TYPE ICONS */
@@ -398,7 +404,6 @@ body {
 
     margin-bottom: 15px;
 }
-
 
 /* RARITIES */
 
@@ -474,4 +479,147 @@ body {
 
 .navbar-toggler-icon {
     filter: brightness(0) invert(1);
+}
+
+.stats-card .form-control {
+    padding: 8px 12px;
+}
+
+/* COLLECTION PAGE LAYOUT */
+
+.collection-progress {
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.stats-card {
+    padding: 18px;
+}
+
+.stats-card h2,
+.stats-card h3 {
+    margin-bottom: 10px;
+}
+
+.stats-card hr {
+    margin: 10px 0;
+}
+
+.scanner-pokemon-image {
+    width: 100px;
+    height: 100px;
+}
+
+#details-description {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* REDUCE HEIGHT OF TOP CARDS */
+
+.collection-title {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.collection-subtitle {
+    margin-bottom: 5px;
+}
+
+.progress.collection-progress {
+    height: 18px;
+}
+
+/* REMOVE BIG GAP ABOVE POKEMON GRID */
+
+#pokemon-grid {
+    margin-top: -220px;
+}
+
+@media (max-width: 992px) {
+
+    #pokemon-grid {
+        margin-top: 0;
+    }
+
+}
+
+/* YELLOW STATISTICS HEADING */
+
+.stats-card h3 {
+    color: #ffcb05;
+    font-weight: 700;
+}
+
+.collection-title {
+    font-size: 1.77rem !important;
+}
+
+.statistics-card {
+    min-height: 184px;
+}
+
+/* SMALLER COLLECTION CARDS */
+
+.pokemon-card {
+
+    padding: 18px;
+
+}
+
+.pokemon-image {
+
+    width: 150px;
+    height: 150px;
+
+}
+
+.pokemon-card h3 {
+
+    font-size: 2rem;
+
+}
+
+.trade-avatar {
+
+width: 60px;
+height: 60px;
+
+border-radius: 50%;
+
+object-fit: cover;
+
+border: 3px solid #4dd0ff;
+
+margin-right: 15px;
+
+}
+
+.comment-avatar {
+
+width: 45px;
+height: 45px;
+
+border-radius: 50%;
+
+object-fit: cover;
+
+border: 2px solid #4dd0ff;
+
+margin-right: 12px;
+
+}
+
+.comment-card {
+
+background: rgba(20,25,35,0.8);
+
+border: 1px solid #2f3547;
+
+border-radius: 12px;
+
+padding: 12px;
+
+margin-bottom: 10px;
+
 }

@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -30,9 +29,7 @@ class User(db.Model):
         default=""
     )
 
-
 class PokemonCard(db.Model):
-
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -54,9 +51,12 @@ class PokemonCard(db.Model):
         nullable=False
     )
 
+    description = db.Column(
+    db.Text,
+    default=""
+)
 
 class UserCollection(db.Model):
-
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -72,4 +72,54 @@ class UserCollection(db.Model):
         db.Integer,
         db.ForeignKey("pokemon_card.id"),
         nullable=False
+    )
+
+class TradePost(db.Model):
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=db.func.now()
+    )
+
+class TradeComment(db.Model):
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+    post_id = db.Column(
+        db.Integer,
+        db.ForeignKey("trade_post.id"),
+        nullable=False
+    )
+
+    content = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=db.func.now()
     )

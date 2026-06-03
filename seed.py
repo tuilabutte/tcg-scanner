@@ -3,13 +3,17 @@ from werkzeug.security import generate_password_hash
 from app import app
 
 from models import (
-    db,
-    User,
-    PokemonCard,
-    UserCollection
+db,
+User,
+PokemonCard,
+UserCollection,
+TradePost,
+TradeComment
 )
 
 with app.app_context():
+
+#USERS
 
     test_users = [
 
@@ -53,16 +57,18 @@ with app.app_context():
 
         if not existing:
 
-            user = User(
-                username=username,
-                password=generate_password_hash(password),
-                profile_picture="default-avatar.png",
-                bio=bio
+            db.session.add(
+                User(
+                    username=username,
+                    password=generate_password_hash(password),
+                    profile_picture="default-avatar.png",
+                    bio=bio
+                )
             )
 
-            db.session.add(user)
-
     db.session.commit()
+
+#COLLECTIONS
 
     collections = {
 
@@ -114,6 +120,9 @@ with app.app_context():
             username=username
         ).first()
 
+        if not user:
+            continue
+
         for pokemon_name in pokemon_list:
 
             card = PokemonCard.query.filter_by(
@@ -134,6 +143,126 @@ with app.app_context():
                     UserCollection(
                         user_id=user.id,
                         pokemon_card_id=card.id
+                    )
+                )
+
+    db.session.commit()
+
+#TRADE POSTS
+
+    sample_posts = [
+
+        (
+            "AshKetchum",
+            "Looking for Aegislash. Offering Talonflame."
+        ),
+
+        (
+            "Misty",
+            "Need a Rowlet for my collection. Happy to trade Staryu."
+        ),
+
+        (
+            "GaryOak",
+            "Trading Klefki and Fletchinder. Looking for rare Pokémon."
+        ),
+
+        (
+            "ProfessorOak",
+            "Research project: seeking all Pokémon for documentation."
+        )
+
+    ]
+
+    for username, content in sample_posts:
+
+        user = User.query.filter_by(
+            username=username
+        ).first()
+
+        if not user:
+            continue
+
+        existing = TradePost.query.filter_by(
+            user_id=user.id,
+            content=content
+        ).first()
+
+        if not existing:
+
+            db.session.add(
+                TradePost(
+                    user_id=user.id,
+                    content=content
+                )
+            )
+
+    db.session.commit()
+
+#COMMENTS
+
+    posts = TradePost.query.order_by(
+        TradePost.id.asc()
+    ).all()
+
+    if len(posts) >= 4:
+
+        sample_comments = [
+
+            (
+                "GaryOak",
+                posts[0].id,
+                "I might have one available."
+            ),
+
+            (
+                "Misty",
+                posts[0].id,
+                "Good luck with that trade!"
+            ),
+
+            (
+                "AshKetchum",
+                posts[1].id,
+                "I'd definitely trade for Rowlet."
+            ),
+
+            (
+                "ProfessorOak",
+                posts[2].id,
+                "Interesting offer."
+            ),
+
+            (
+                "Brock",
+                posts[3].id,
+                "Happy to help the research effort."
+            )
+
+        ]
+
+        for username, post_id, content in sample_comments:
+
+            user = User.query.filter_by(
+                username=username
+            ).first()
+
+            if not user:
+                continue
+
+            existing = TradeComment.query.filter_by(
+                user_id=user.id,
+                post_id=post_id,
+                content=content
+            ).first()
+
+            if not existing:
+
+                db.session.add(
+                    TradeComment(
+                        user_id=user.id,
+                        post_id=post_id,
+                        content=content
                     )
                 )
 

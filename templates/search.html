@@ -1,36 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Trainer Search{% endblock %}
+{% block title %}Trainers{% endblock %}
 
 {% block content %}
 
 <div class="container">
 
-    <div class="collection-header">
+<div class="collection-header">
 
-        <h1 class="collection-title">
-            Find Trainers
-        </h1>
+    <h1 class="collection-title">
+        Trainers
+    </h1>
 
-        <p class="collection-subtitle">
-            Search for other Pokémon collectors.
-        </p>
+    <p class="collection-subtitle">
+        Browse all registered trainers.
+    </p>
 
-    </div>
+</div>
 
-    <div class="search-box">
+<div class="search-box mb-4">
 
-        <input type="text"
-            id="trainer-search"
-            class="form-control"
-            placeholder="Search trainers...">
+    <input
+        type="text"
+        id="trainer-search"
+        class="form-control"
+        placeholder="Search trainers...">
 
-    </div>
+</div>
 
-    <div id="search-results"
-        class="row g-4 mt-3">
+<div
+    id="search-results"
+    class="row g-4">
 
-    </div>
+</div>
 
 </div>
 
@@ -41,20 +43,24 @@
 <script>
 
 const searchInput =
-    document.getElementById("trainer-search");
-
-searchInput.addEventListener("input", async () => {
-
-    const query = searchInput.value;
-
-    const response = await fetch(
-        `/api/search-users?q=${query}`
+    document.getElementById(
+        "trainer-search"
     );
 
-    const users = await response.json();
+async function loadUsers(query = "") {
+
+    const response =
+        await fetch(
+            `/api/search-users?q=${query}`
+        );
+
+    const users =
+        await response.json();
 
     const results =
-        document.getElementById("search-results");
+        document.getElementById(
+            "search-results"
+        );
 
     results.innerHTML = "";
 
@@ -62,7 +68,7 @@ searchInput.addEventListener("input", async () => {
 
         results.innerHTML += `
 
-        <div class="col-md-4">
+        <div class="col-md-4 col-lg-3">
 
             <div class="pokemon-card">
 
@@ -70,9 +76,14 @@ searchInput.addEventListener("input", async () => {
                     src="/static/images/profiles/${user.profile_picture}"
                     class="profile-image">
 
-                <h3>${user.username}</h3>
+                <h3>
 
-                <a href="/profile/${user.id}"
+                    ${user.username}
+
+                </h3>
+
+                <a
+                    href="/profile/${user.id}"
                     class="btn btn-warning mt-3">
 
                     View Profile
@@ -84,11 +95,20 @@ searchInput.addEventListener("input", async () => {
         </div>
 
         `;
+
     });
 
-});
+}
+
+loadUsers();
+
+searchInput.addEventListener(
+    "input",
+    () => loadUsers(
+        searchInput.value
+    )
+);
 
 </script>
 
 {% endblock %}
-
